@@ -1,0 +1,8 @@
+* text=auto
+
+# Project and solution files
+*.sln text eol=crlf
+*.csproj text eol=crlf
+
+# Source files
+*.cs diff=csharp
