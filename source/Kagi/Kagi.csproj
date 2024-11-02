@@ -4,6 +4,7 @@
 		<RootNamespace>Kagi</RootNamespace>
 
 		<IsPackable>true</IsPackable>
+		<AssemblyName>kagi-dotnet</AssemblyName>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		
