@@ -2,5 +2,12 @@
 An unofficial .NET library for interacting with the Kagi API.
 
 
+## Installation
+Install the library via [NuGet](https://www.nuget.org/packages/kagi-dotnet):
+```bash
+dotnet add package kagi-dotnet
+```
+
+
 ## License
 This project is licensed under the MIT license. See `license.txt` for full details.
