@@ -6,8 +6,14 @@ using System.Text.Json.Serialization;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Represents the response data for a
+	/// <see cref="KagiSearchResult"/>.
 	/// </summary>
+	/// <remarks>
+	/// Response data is polymorphic and should be either
+	/// <see cref="KagiRecordSearchData"/> or
+	/// <see cref="KagiRelatedQuerySearchData"/>.
+	/// </remarks>
 	[JsonPolymorphic(
 		TypeDiscriminatorPropertyName = "t")]
 	[JsonDerivedType(
@@ -19,7 +25,7 @@ namespace Kagi
 	public class KagiSearchData
 	{
 		/// <summary>
-		/// 
+		/// The type for the search output.
 		/// </summary>
 		[JsonPropertyName(
 			"t")]

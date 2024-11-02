@@ -8,13 +8,13 @@ using System.Collections.Immutable;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Represents the result of a search operation.
 	/// </summary>
 	public class KagiSearchResult :
 		KagiResult
 	{
 		/// <summary>
-		/// 
+		/// The response data for the result.
 		/// </summary>
 		[JsonPropertyName(
 			"data")]

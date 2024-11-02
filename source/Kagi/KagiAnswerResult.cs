@@ -6,13 +6,13 @@ using System.Text.Json.Serialization;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Represents the result of an answer operation.
 	/// </summary>
 	public class KagiAnswerResult :
 		KagiResult
 	{
 		/// <summary>
-		/// 
+		/// The response data for the result.
 		/// </summary>
 		[JsonPropertyName(
 			"data")]

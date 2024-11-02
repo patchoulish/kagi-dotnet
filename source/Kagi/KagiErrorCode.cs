@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Enumerates the possible error codes.
 	/// </summary>
 	[JsonConverter(
 		typeof(JsonNumberEnumConverter<KagiErrorCode>))]

@@ -7,14 +7,12 @@ using System.Collections.Immutable;
 
 namespace Kagi
 {
-	/// <summary>
-	/// 
-	/// </summary>
+	/// <inheritdoc />
 	public class KagiRelatedQuerySearchData :
 		KagiSearchData
 	{
 		/// <summary>
-		/// 
+		/// A collection of related search queries.
 		/// </summary>
 		[JsonPropertyName(
 			"list")]

@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Represents an image associated with a search record.
 	/// </summary>
 	public class KagiRecordSearchDataThumbnail
 	{
@@ -19,8 +19,12 @@ namespace Kagi
 		private string UrlOrProxyPathFragment { get; init; }
 
 		/// <summary>
-		/// 
+		/// The image URL.
 		/// </summary>
+		/// <remarks>
+		/// Proxied image URLs are automatically fixed-up using
+		/// <see cref="KagiUrlHelper"/>.
+		/// </remarks>
 		[JsonIgnore]
 		public Uri Url =>
 			KagiUrlHelper.IsImageProxyPathFragment(
@@ -31,14 +35,14 @@ namespace Kagi
 						UrlOrProxyPathFragment);
 
 		/// <summary>
-		/// 
+		/// The width of the image, if any.
 		/// </summary>
 		[JsonPropertyName(
 			"width")]
 		public int? Width { get; init; }
 
 		/// <summary>
-		/// 
+		/// The height of the image, if any.
 		/// </summary>
 		[JsonPropertyName(
 			"height")]
