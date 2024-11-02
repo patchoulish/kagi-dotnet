@@ -1,0 +1,58 @@
+name: Build and Test
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+    pull_request:
+        types: [opened, reopened, synchronize]
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        env:
+            version_suffix_args: ${{ format('/p:VersionSuffix="artifact.{0}"', github.run_number) }}
+        steps:
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: '8.x'
+
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Restore dependencies
+              run: dotnet restore
+                  source/Kagi.sln
+
+            - name: Build
+              run: dotnet build
+                  source/Kagi.sln
+                  --configuration Release
+
+            - name: Pack
+              run: dotnet pack
+                  source/Kagi.sln
+                  --configuration Release
+                  --output "${{github.workspace}}/artifacts/packages"
+                  ${{ env.version_suffix_args}}
+
+            - name: Run unit tests
+              run: dotnet test
+                  source/Kagi.sln
+                  --configuration Release
+                  --filter="TestCategory!=Manual"
+                  --logger "trx;LogFilePrefix=main"
+                  --results-directory ${{github.workspace}}/artifacts/test-results
+                  ${{ env.version_suffix_args}}
+              env:
+                  KAGI_API_KEY: ${{ secrets.KAGI_API_KEY }}
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: build-artifacts
+                  path: ${{github.workspace}}/artifacts
