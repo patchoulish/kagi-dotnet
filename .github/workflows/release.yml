@@ -1,0 +1,102 @@
+name: Release
+
+on:
+    release:
+        types: [published]
+    schedule:
+        - cron: '0 0 * * *'
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        env:
+            version_suffix_args: ${{ github.event_name == 'schedule' && format('/p:VersionSuffix="artifact.{0}"', github.run_number) || '' }}
+        permissions:
+            packages: write
+            contents: write
+        steps:
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: '8.x'
+
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Restore dependencies
+              run: dotnet restore
+                  source/Kagi.sln
+
+            - name: Build
+              run: dotnet build
+                  source/Kagi.sln
+                  --configuration Release
+
+            - name: Pack
+              run: dotnet pack
+                  source/Kagi.sln
+                  --configuration Release
+                  --output "${{ github.workspace }}/artifacts/packages"
+                  /p:PackageProjectUrl="${{ github.server_url }}/${{ github.repository }}/tree/${{ github.event.release.tag_name }}"
+                  /p:PackageReleaseNotes="${{ github.server_url }}/${{ github.repository }}/blob/${{ github.event.release.tag_name }}/changelog.md"
+                  ${{ env.version_suffix_args }}
+
+            - name: Run unit tests
+              run: dotnet test
+                  source/Kagi.sln
+                  --configuration Release
+                  --filter="TestCategory!=Manual"
+                  --logger "trx;LogFilePrefix=release"
+                  --results-directory ${{ github.workspace }}/artifacts/test-results
+                  ${{ env.version_suffix_args }}
+              env:
+                  KAGI_API_KEY: ${{ secrets.KAGI_API_KEY }}
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              if: ${{ !cancelled() }}
+              with:
+                  name: build-artifacts
+                  path: ${{ github.workspace }}/artifacts
+
+    deploy:
+        name: Publish Package
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Download build artifacts
+              uses: actions/download-artifact@v4
+
+            - name: Upload release asset
+              if: github.event_name == 'release'
+              run: gh release upload ${{ github.event.release.tag_name }}
+                  ${{ github.workspace }}/build-artifacts/packages/*.*nupkg
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: NuGet authenticate
+              run: dotnet nuget add source
+                  "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+                  --name "github"
+                  --username ${{ github.actor }}
+                  --password ${{ secrets.GITHUB_TOKEN }}
+                  --store-password-in-clear-text
+
+            - name: Publish package to local feed
+              run: dotnet nuget push
+                  ${{ github.workspace }}/build-artifacts/packages/*.nupkg
+                  --source "github"
+                  --api-key ${{ secrets.GITHUB_TOKEN }}
+                  --skip-duplicate
+
+            - name: Publish package to nuget.org
+              if: github.event_name == 'release'
+              run: dotnet nuget push
+                  ${{ github.workspace }}/build-artifacts/packages/*.nupkg
+                  --source https://api.nuget.org/v3/index.json
+                  --api-key ${{ secrets.NUGET_API_KEY }}
+                  --skip-duplicate
