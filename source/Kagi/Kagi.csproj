@@ -26,7 +26,7 @@
 		<PackageVersion>0.1.1</PackageVersion>
 		<PackageDescription>An unofficial .NET library for interacting with the Kagi API</PackageDescription>
 		<PackageProjectUrl>https://github.com/patchoulish/kagi-dotnet</PackageProjectUrl>
-		<PackageTags>dotnet;api;kagi</PackageTags>
+		<PackageTags>dotnet;api;kagi;search;summarization;fastgpt;web-index;ai</PackageTags>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
