@@ -1,5 +1,5 @@
 # kagi-dotnet [![CI](https://github.com/patchoulish/kagi-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/patchoulish/kagi-dotnet/actions/workflows/ci.yml)
-An unofficial .NET library for interacting with the [Kagi](https://kagi.com/) API suite. Designed with .NET standards in mind, this library offers a straightforward, developer-friendly interface for working with advanced features like summarization, search, and content enrichment, making integration into your projects simple and efficient.
+A .NET library for interacting with the [Kagi](https://kagi.com/) API. Designed with .NET standards in mind, this library offers a straightforward, developer-friendly interface for working with advanced features like summarization, search, and content enrichment, making integration into your projects simple and efficient.
 
 
 ## Features
