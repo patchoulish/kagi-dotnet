@@ -11,7 +11,7 @@
 		<!-- Project details -->
 		<Title>kagi-dotnet</Title>
 		<Version>0.1.1</Version>
-		<Description>An unofficial .NET library for interacting with the Kagi API</Description>
+		<Description>A .NET library for interacting with the Kagi API</Description>
 		<Copyright>Copyright (c) 2024 Patchouli (self@patchouli.sh)</Copyright>
 		<Authors>Patchouli (self@patchouli.sh)</Authors>
 		
@@ -24,7 +24,7 @@
 	<PropertyGroup>
 		<PackageId>kagi-dotnet</PackageId>
 		<PackageVersion>0.1.1</PackageVersion>
-		<PackageDescription>An unofficial .NET library for interacting with the Kagi API</PackageDescription>
+		<PackageDescription>A .NET library for interacting with the Kagi API</PackageDescription>
 		<PackageProjectUrl>https://github.com/patchoulish/kagi-dotnet</PackageProjectUrl>
 		<PackageTags>dotnet;api;kagi;search;summarization;fastgpt;web-index;ai</PackageTags>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
