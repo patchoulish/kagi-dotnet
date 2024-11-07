@@ -15,8 +15,8 @@ namespace Kagi
 	/// <summary>
 	/// 
 	/// </summary>
-	public sealed class KagiClient :
-		IDisposable
+	public sealed class KagiService :
+		IKagiService
 	{
 		/// <summary>
 		/// The base URL for the Kagi API.
@@ -25,7 +25,7 @@ namespace Kagi
 			"https://kagi.com/api/v0/";
 
 		/// <summary>
-		/// Gets the default base URL for a <see cref="KagiClient"/>.
+		/// Gets the default base URL for a <see cref="KagiService"/>.
 		/// </summary>
 		public static Uri DefaultBaseUrl { get; } =
 			new Uri(DefaultBaseUrlValue);
@@ -117,50 +117,28 @@ namespace Kagi
 		}
 
 		private readonly HttpClient client;
-		private readonly bool ownsClient;
-		private volatile bool isDisposed;
 
 		/// <summary>
 		/// Gets the base URL used by the client.
 		/// </summary>
-		public Uri BaseUrl
-		{
-			get
-			{
-				ObjectDisposedException
-					.ThrowIf(
-						this.isDisposed,
-						this);
-
-				return this.client
-					.BaseAddress;
-			}
-		}
+		public Uri BaseUrl =>
+			this.client
+				.BaseAddress;
 
 		/// <summary>
 		/// Gets the authorization header value set on the client.
 		/// </summary>
-		public AuthenticationHeaderValue AuthorizationHeaderValue
-		{
-			get
-			{
-				ObjectDisposedException
-					.ThrowIf(
-						this.isDisposed,
-						this);
-
-				return this.client
-					.DefaultRequestHeaders
-					.Authorization;
-			}
-		}
+		public AuthenticationHeaderValue AuthorizationHeaderValue =>
+			this.client
+				.DefaultRequestHeaders
+				.Authorization;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiClient"/>
+		/// Initializes a new instance of the <see cref="KagiService"/>
 		/// class with the specified API key.
 		/// </summary>
 		/// <param name="apiKey">The API key for authorizing requests.</param>
-		public KagiClient(
+		public KagiService(
 			string apiKey) :
 				this(
 					DefaultBaseUrl,
@@ -168,30 +146,27 @@ namespace Kagi
 		{ }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiClient"/>
+		/// Initializes a new instance of the <see cref="KagiService"/>
 		/// class with the specified base URL and API key.
 		/// </summary>
 		/// <param name="baseUrl">The base URL for the API.</param>
 		/// <param name="apiKey">The API key for authorizing requests.</param>
-		public KagiClient(
+		public KagiService(
 			Uri baseUrl,
 			string apiKey) :
 				this(
 					CreateClient(
 						baseUrl,
-						apiKey),
-					true)
+						apiKey))
 		{ }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiClient"/>
-		/// class with a specified <see cref="HttpClient"/> and ownership flag.
+		/// Initializes a new instance of the <see cref="KagiService"/>
+		/// class with a specified <see cref="HttpClient"/>.
 		/// </summary>
 		/// <param name="client">The <see cref="HttpClient"/> instance to use.</param>
-		/// <param name="ownsClient">Specifies whether the client should dispose the HttpClient instance.</param>
-		public KagiClient(
-			HttpClient client,
-			bool ownsClient = false)
+		public KagiService(
+			HttpClient client)
 		{
 			ArgumentNullException
 				.ThrowIfNull(
@@ -199,7 +174,6 @@ namespace Kagi
 					nameof(client));
 
 			this.client = client;
-			this.ownsClient = ownsClient;
 		}
 
 		/// <summary>
@@ -217,11 +191,6 @@ namespace Kagi
 				.ThrowIfNull(
 					options,
 					nameof(options));
-
-			ObjectDisposedException
-				.ThrowIf(
-					this.isDisposed,
-					this);
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSummarizeRequestUri(
@@ -261,11 +230,6 @@ namespace Kagi
 				.ThrowIfNull(
 					options,
 					nameof(options));
-
-			ObjectDisposedException
-				.ThrowIf(
-					this.isDisposed,
-					this);
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateAnswerRequestUri(
@@ -313,11 +277,6 @@ namespace Kagi
 					limit,
 					nameof(limit));
 
-			ObjectDisposedException
-				.ThrowIf(
-					this.isDisposed,
-					this);
-
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSearchRequestUri(
 				query,
@@ -357,11 +316,6 @@ namespace Kagi
 					query,
 					nameof(query));
 
-			ObjectDisposedException
-				.ThrowIf(
-					this.isDisposed,
-					this);
-
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSearchWebEnrichmentsRequestUri(
 				query,
@@ -400,11 +354,6 @@ namespace Kagi
 					query,
 					nameof(query));
 
-			ObjectDisposedException
-				.ThrowIf(
-					this.isDisposed,
-					this);
-
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSearchNewsEnrichmentsRequestUri(
 				query,
@@ -425,24 +374,6 @@ namespace Kagi
 			return await ProcessResponseAsync<KagiSearchResult>(
 				response,
 				cancellationToken);
-		}
-
-		/// <summary>
-		/// Releases the resources used by the <see cref="KagiClient"/> instance.
-		/// </summary>
-		public void Dispose()
-		{
-			ObjectDisposedException
-				.ThrowIf(
-					this.isDisposed,
-					this);
-
-			Dispose(
-				true);
-
-			this.isDisposed = true;
-			GC.SuppressFinalize(
-				this);
 		}
 
 		/// <summary>
@@ -525,28 +456,5 @@ namespace Kagi
 						Uri.EscapeDataString(
 							query)),
 					out result);
-
-		/// <summary>
-		/// Releases the resources used by the <see cref="KagiClient"/> instance.
-		/// </summary>
-		/// <param name="disposing">True if managed resources should be disposed; otherwise, false.</param>
-		private void Dispose(
-			bool disposing)
-		{
-			if (this.ownsClient)
-			{
-				this.client?
-					.Dispose();
-			}
-		}
-
-		/// <summary>
-		/// Destroys the <see cref="KagiClient"/> instance.
-		/// </summary>
-		~KagiClient()
-		{
-			Dispose(
-				false);
-		}
 	}
 }

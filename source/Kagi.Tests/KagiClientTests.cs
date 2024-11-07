@@ -13,7 +13,7 @@ namespace Kagi
 	[TestClass]
 	public sealed partial class KagiClientTests
 	{
-		private KagiClient client;
+		private KagiService client;
 
 		/// <summary>
 		/// 
@@ -21,23 +21,11 @@ namespace Kagi
 		[TestInitialize]
 		public void Initialize()
 		{
-			var clientApiKey =
-				Environment.GetEnvironmentVariable(
-					"KAGI_API_KEY");
+			var clientApiKey = "AgCA7gnvCwc.-SVgHlK0ITk8-2vJRtkNyT-NMm5REOSPpIAskwoE7Gc";
 
 			this.client =
-				new KagiClient(
+				new KagiService(
 					clientApiKey);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		[TestCleanup]
-		public void Cleanup()
-		{
-			this.client
-				.Dispose();
 		}
 	}
 }
