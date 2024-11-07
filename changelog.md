@@ -1,6 +1,13 @@
 # Release History
 
 
+## 0.1.2 (2024-11-06)
+Minor refactor with added features.
+
+### Features Added
+- Added support for dependency injection.
+
+
 ## 0.1.1 (2024-11-02)
 Added inline documentation.
 
