@@ -12,8 +12,11 @@ Install the library via [NuGet](https://www.nuget.org/packages/kagi-dotnet):
 ```bash
 dotnet add package kagi-dotnet
 ```
+
+### Extensions
+Install optional library extensions for more functionality, depending on your use case.
 #### Dependency Injection
-If your application is configured with DI, install the extension library via [NuGet](https://www.nuget.org/packages/kagi-dotnet-dependencyinjection):
+Integrate gravatar-dotnet and your DI container of choice. Install the extension library via [NuGet](https://www.nuget.org/packages/kagi-dotnet-dependencyinjection):
 ```bash
 dotnet add package kagi-dotnet-dependencyinjection
 ```
@@ -21,11 +24,11 @@ dotnet add package kagi-dotnet-dependencyinjection
 
 ## Usage
 1. Obtain your API key from the [Kagi API portal](https://kagi.com/settings?p=api) (requires a Kagi account).
-2. Pass the API key into a new instance of `KagiService` or use a configured `HttpClient` if advanced configuration (e.g., proxies) is required.
+2. Pass the API key into a new instance of the `KagiService` class or use a configured `HttpClient` if advanced configuration (e.g., proxies) is required.
 3. Use the methods available on `KagiService` to interact with the Kagi API.
 
 ### Initialization
-The client can be initialized in three ways:
+The library can be initialized in three ways:
 #### Basic Initialization
 Pass in your API key directly:
 ```csharp
@@ -46,7 +49,7 @@ httpClient.DefaultRequestHeaders.Authorization =
 var kagi = new KagiService(httpClient);
 ```
 #### Dependency Injection
-If you've installed the extension library-
+If you've installed the appropriate extension library.
 1. Register `KagiService` with your dependency container:
 ```csharp
 services.AddKagiHttpClient(options =>
