@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kagi", "Kagi\Kagi.csproj", "{A38B31BA-369A-4D7E-977D-41D8BAE034BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kagi", "Kagi\Kagi.csproj", "{A38B31BA-369A-4D7E-977D-41D8BAE034BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kagi.Tests", "Kagi.Tests\Kagi.Tests.csproj", "{47C28762-CD61-46B5-9893-D9FC64F84F86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kagi.Tests", "Kagi.Tests\Kagi.Tests.csproj", "{47C28762-CD61-46B5-9893-D9FC64F84F86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kagi.Extensions.DependencyInjection", "Kagi.Extensions.DependencyInjection\Kagi.Extensions.DependencyInjection.csproj", "{FE6EA35A-5B0E-4180-AFEE-90EB9898D244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{47C28762-CD61-46B5-9893-D9FC64F84F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C28762-CD61-46B5-9893-D9FC64F84F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47C28762-CD61-46B5-9893-D9FC64F84F86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE6EA35A-5B0E-4180-AFEE-90EB9898D244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE6EA35A-5B0E-4180-AFEE-90EB9898D244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE6EA35A-5B0E-4180-AFEE-90EB9898D244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE6EA35A-5B0E-4180-AFEE-90EB9898D244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
