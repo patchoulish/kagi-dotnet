@@ -1,5 +1,5 @@
 # kagi-dotnet [![CI](https://github.com/patchoulish/kagi-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/patchoulish/kagi-dotnet/actions/workflows/ci.yml)
-A .NET library for interacting with the [Kagi](https://kagi.com/) API. Designed with .NET standards in mind, this library offers a straightforward, developer-friendly interface for working with advanced features like summarization, search, and content enrichment, making integration into your projects simple and efficient.
+A .NET library for interacting with the [Kagi](https://kagi.com/) API.
 
 
 ## Features
@@ -12,20 +12,27 @@ Install the library via [NuGet](https://www.nuget.org/packages/kagi-dotnet):
 ```bash
 dotnet add package kagi-dotnet
 ```
+#### Dependency Injection
+If your application is configured with DI, install the extension library via [NuGet](https://www.nuget.org/packages/kagi-dotnet-dependencyinjection):
+```bash
+dotnet add package kagi-dotnet-dependencyinjection
+```
 
 
 ## Usage
 1. Obtain your API key from the [Kagi API portal](https://kagi.com/settings?p=api) (requires a Kagi account).
-2. Pass the API key into a new instance of `KagiClient` or use a configured `HttpClient` if advanced configuration (e.g., proxies) is required.
-3. Use the methods available on `KagiClient` to interact with the Kagi API.
+2. Pass the API key into a new instance of `KagiService` or use a configured `HttpClient` if advanced configuration (e.g., proxies) is required.
+3. Use the methods available on `KagiService` to interact with the Kagi API.
 
 ### Initialization
-The client can be initialized in two ways:
-1. **Basic Initialization** – Pass in your API key directly:
+The client can be initialized in three ways:
+#### Basic Initialization
+Pass in your API key directly:
 ```csharp
-var client = new KagiClient("YOUR_KAGI_API_KEY");
+var kagi = new KagiService("YOUR_KAGI_API_KEY");
 ```
-2. **Advanced Initialization** – Use an existing HttpClient, ensuring that `BaseAddress` and an `Authorization` header have been set:
+#### Advanced Initialization
+Use an existing `HttpClient`, ensuring that `BaseAddress` and an `Authorization` header have been set:
 ```csharp
 var httpClient = new HttpClient
 {
@@ -36,7 +43,29 @@ var httpClient = new HttpClient
 httpClient.DefaultRequestHeaders.Authorization =
 	new AuthenticationHeaderValue("Bot", "YOUR_KAGI_API_KEY");
 
-var client = new KagiClient(httpClient);
+var kagi = new KagiService(httpClient);
+```
+#### Dependency Injection
+If you've installed the extension library-
+1. Register `KagiService` with your dependency container:
+```csharp
+services.AddKagiHttpClient(options =>
+{
+	options.BaseUrl = new Uri("https://kagi.com/api/v0/");
+	options.ApiKey = "YOUR_KAGI_API_KEY";
+});
+```
+2. Inject `IKagiService` where needed:
+```csharp
+public class MyClass
+{
+    private readonly IKagiService kagi;
+
+    public MyClass(IKagiService kagi)
+    {
+        this.kagi = kagi;
+    }
+}
 ```
 
 ### Summarization
@@ -51,7 +80,7 @@ var summarizeOptions = new KagiSummarizeOptions
     Text = "Kagi is a paid ad-free search engine developed by Kagi Inc..."
 };
 
-var summarizeResult = await client.SummarizeAsync(summarizeOptions);
+var summarizeResult = await kagi.SummarizeAsync(summarizeOptions);
 	
 Console.WriteLine(summarizeResult.Data.Output);
 ```
@@ -64,7 +93,7 @@ var answerOptions = new KagiAnswerOptions
     Query = "What is the airspeed of a fully-laden swallow?"
 };
 
-var answerResult = await client.AnswerAsync(answerOptions);
+var answerResult = await kagi.AnswerAsync(answerOptions);
 
 Console.WriteLine(
 	$"{answerResult.Data.Output}\n\n" +
@@ -76,7 +105,7 @@ The **Search API** allows you to access Kagi’s search engine programmatically.
 > [!NOTE]
 > This API is currently in closed beta for business users.
 ```csharp
-var searchResults = await client.SearchAsync("weather today", limit: 20);
+var searchResults = await kagi.SearchAsync("weather today", limit: 20);
 
 foreach (var item in searchResults.Data)
 {
@@ -97,7 +126,7 @@ The **Enrichment API** allows you to access unique web content from Kagi’s spe
 #### Web Enrichment
 Retrieve supplemental results focused on high-quality "small web" content.
 ```csharp
-var webEnrichmentResults = await client.SearchWebEnrichmentsAsync("coffee blog");
+var webEnrichmentResults = await kagi.SearchWebEnrichmentsAsync("coffee blog");
 
 foreach (var item in webEnrichmentResults.Data)
 {
@@ -108,7 +137,7 @@ foreach (var item in webEnrichmentResults.Data)
 #### News Enrichment
 Retrieve non-mainstream, high-quality news content relevant to your query.
 ```csharp
-var newsEnrichmentResults = await client.SearchNewsEnrichmentsAsync("local news");
+var newsEnrichmentResults = await kagi.SearchNewsEnrichmentsAsync("local news");
 
 foreach (var item in newsEnrichmentResults.Data)
 {
