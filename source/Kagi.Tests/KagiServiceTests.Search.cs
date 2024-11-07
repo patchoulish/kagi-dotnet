@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kagi
 {
-	partial class KagiClientTests
+	partial class KagiServiceTests
 	{
 		/// <summary>
 		/// 
@@ -23,7 +23,7 @@ namespace Kagi
 		public async Task SearchThrowOnArgumentNullAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-				() => this.client.SearchAsync(
+				() => this.kagi.SearchAsync(
 					default,
 					30));
 		}
@@ -40,7 +40,7 @@ namespace Kagi
 		public async Task SearchThrowOnArgumentEmptyAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentException>(
-				() => this.client.SearchAsync(
+				() => this.kagi.SearchAsync(
 					String.Empty,
 					30));
 		}
@@ -57,12 +57,12 @@ namespace Kagi
 		public async Task SearchThrowOnArgumentOutOfRangeAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(
-				() => this.client.SearchAsync(
+				() => this.kagi.SearchAsync(
 					"query",
 					0));
 
 			await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(
-				() => this.client.SearchAsync(
+				() => this.kagi.SearchAsync(
 					"query",
 					-1));
 		}

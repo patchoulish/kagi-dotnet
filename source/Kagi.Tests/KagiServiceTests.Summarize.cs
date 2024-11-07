@@ -11,12 +11,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kagi
 {
-	partial class KagiClientTests
+	partial class KagiServiceTests
 	{
 		/// <summary>
 		/// 
 		/// </summary>
-		public static IEnumerable<object[]> SummarizeThrowOnBadRequestData =>
+		public static IEnumerable<object[]> SummarizeThrowOnBadRequestTestData =>
 			[
 				[
 					new KagiSummarizeOptions()
@@ -53,7 +53,7 @@ namespace Kagi
 		public async Task SummarizeThrowOnArgumentNullAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-				() => this.client.SummarizeAsync(
+				() => this.kagi.SummarizeAsync(
 					default));
 		}
 
@@ -67,12 +67,12 @@ namespace Kagi
 		[TestCategory(
 			"BadRequest")]
 		[DataTestMethod]
-		[DynamicData(nameof(SummarizeThrowOnBadRequestData))]
+		[DynamicData(nameof(SummarizeThrowOnBadRequestTestData))]
 		public async Task SummarizeThrowOnBadRequestAsync(
 			KagiSummarizeOptions options)
 		{
 			await Assert.ThrowsExceptionAsync<KagiException>(
-				() => this.client.SummarizeAsync(
+				() => this.kagi.SummarizeAsync(
 					options));
 		}
 	}

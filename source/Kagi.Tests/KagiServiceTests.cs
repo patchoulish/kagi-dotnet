@@ -11,9 +11,9 @@ namespace Kagi
 	/// 
 	/// </summary>
 	[TestClass]
-	public sealed partial class KagiClientTests
+	public sealed partial class KagiServiceTests
 	{
-		private KagiService client;
+		private KagiService kagi;
 
 		/// <summary>
 		/// 
@@ -23,7 +23,7 @@ namespace Kagi
 		{
 			var clientApiKey = "AgCA7gnvCwc.-SVgHlK0ITk8-2vJRtkNyT-NMm5REOSPpIAskwoE7Gc";
 
-			this.client =
+			this.kagi =
 				new KagiService(
 					clientApiKey);
 		}

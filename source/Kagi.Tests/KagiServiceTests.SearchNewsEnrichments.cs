@@ -9,21 +9,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kagi
 {
-	partial class KagiClientTests
+	partial class KagiServiceTests
 	{
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <returns></returns>
 		[TestCategory(
-			"SearchWebEnrichments")]
+			"SearchNewsEnrichments")]
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchWebEnrichmentsThrowOnArgumentNullAsync()
+		public async Task SearchNewsEnrichmentsThrowOnArgumentNullAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-				() => this.client.SearchWebEnrichmentsAsync(
+				() => this.kagi.SearchNewsEnrichmentsAsync(
 					default));
 		}
 
@@ -32,14 +32,14 @@ namespace Kagi
 		/// </summary>
 		/// <returns></returns>
 		[TestCategory(
-			"SearchWebEnrichments")]
+			"SearchNewsEnrichments")]
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchWebEnrichmentsThrowOnArgumentEmptyAsync()
+		public async Task SearchNewsEnrichmentsThrowOnArgumentEmptyAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentException>(
-				() => this.client.SearchWebEnrichmentsAsync(
+				() => this.kagi.SearchNewsEnrichmentsAsync(
 					String.Empty));
 		}
 	}
