@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<RunSettings>
+	<RunConfiguration>
+		<EnvironmentVariables>
+			<KAGI_API_KEY>YOUR_KAGI_API_KEY</KAGI_API_KEY>
+		</EnvironmentVariables>
+	</RunConfiguration>
+</RunSettings>
