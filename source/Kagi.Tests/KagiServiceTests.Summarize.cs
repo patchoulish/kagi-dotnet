@@ -28,6 +28,13 @@ namespace Kagi
 				[
 					new KagiSummarizeOptions()
 					{
+						Url = new Uri("http://www.example.test"),
+						Text = default,
+					}
+				],
+				[
+					new KagiSummarizeOptions()
+					{
 						Url = default,
 						Text = String.Empty,
 					}
@@ -37,6 +44,45 @@ namespace Kagi
 					{
 						Url = new Uri("http://www.example.test"),
 						Text = "Example Text",
+					}
+				],
+			];
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public static IEnumerable<object[]> SummarizeTestData =>
+			[
+				[
+					new KagiSummarizeOptions()
+					{
+						Url = new Uri("https://en.wikipedia.org/wiki/Millennium_Prize_Problems"),
+						Text = default,
+						AllowCaching = true,
+						Kind = KagiSummaryKind.Takeaway,
+						Engine = KagiSummaryEngine.Cecil,
+						OutputLanguage = KagiSummaryLanguage.English,
+					}
+				],
+				[
+					new KagiSummarizeOptions()
+					{
+						Url = new Uri("https://en.wikipedia.org/wiki/Theoretical_computer_science"),
+						Text = default,
+						AllowCaching = true,
+						Kind = KagiSummaryKind.Summary,
+						Engine = KagiSummaryEngine.Cecil,
+						OutputLanguage = KagiSummaryLanguage.Japanese,
+					}
+				],
+				[
+					new KagiSummarizeOptions()
+					{
+						Url = new Uri("https://en.wikipedia.org/wiki/Neural_network"),
+						Text = default,
+						AllowCaching = true,
+						Kind = KagiSummaryKind.Summary,
+						Engine = KagiSummaryEngine.Cecil,
 					}
 				],
 			];
@@ -74,6 +120,36 @@ namespace Kagi
 			await Assert.ThrowsExceptionAsync<KagiException>(
 				() => this.kagi.SummarizeAsync(
 					options));
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="options"></param>
+		/// <returns></returns>
+		[TestCategory(
+			"Summarize")]
+		[TestCategory(
+			"Result")]
+		[DataTestMethod]
+		[DynamicData(nameof(SummarizeTestData))]
+		public async Task SummarizeAsync(
+			KagiSummarizeOptions options)
+		{
+			// Sleep for a bit to not stress Kagi out.
+			Task.Delay(1000)
+				.Wait();
+
+			var summarizeResult =
+				await this.kagi
+					.SummarizeAsync(
+						options);
+
+			Assert.IsNotNull(
+				summarizeResult);
+
+			Assert.IsNotNull(
+				summarizeResult.Metadata);
 		}
 	}
 }

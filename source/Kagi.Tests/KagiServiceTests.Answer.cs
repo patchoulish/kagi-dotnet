@@ -22,12 +22,56 @@ namespace Kagi
 					new KagiAnswerOptions()
 					{
 						Query = default,
+						AllowCaching = true
 					}
 				],
 				[
 					new KagiAnswerOptions()
 					{
 						Query = String.Empty,
+						AllowCaching = true
+					}
+				],
+			];
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public static IEnumerable<object[]> AnswerTestData =>
+	[
+		[
+					new KagiAnswerOptions()
+					{
+						Query = "where was google founded?",
+						AllowCaching = true
+					}
+				],
+				[
+					new KagiAnswerOptions()
+					{
+						Query = "what are the millennium prize problems?",
+						AllowCaching = true
+					}
+				],
+				[
+					new KagiAnswerOptions()
+					{
+						Query = "what's a recipe for pound cake?",
+						AllowCaching = true
+					}
+				],
+				[
+					new KagiAnswerOptions()
+					{
+						Query = "how many weeks of mandatory vacation are there in france?",
+						AllowCaching = true
+					}
+				],
+				[
+					new KagiAnswerOptions()
+					{
+						Query = "what's the furthest height someone has skydived from?",
+						AllowCaching = true
 					}
 				],
 			];
@@ -65,6 +109,36 @@ namespace Kagi
 			await Assert.ThrowsExceptionAsync<KagiException>(
 				() => this.kagi.AnswerAsync(
 					options));
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="options"></param>
+		/// <returns></returns>
+		[TestCategory(
+			"Answer")]
+		[TestCategory(
+			"Result")]
+		[DataTestMethod]
+		[DynamicData(nameof(AnswerTestData))]
+		public async Task AnswerAsync(
+			KagiAnswerOptions options)
+		{
+			// Sleep for a bit to not stress Kagi out.
+			Task.Delay(1000)
+				.Wait();
+
+			var answerResult =
+				await this.kagi
+					.AnswerAsync(
+						options);
+
+			Assert.IsNotNull(
+				answerResult);
+
+			Assert.IsNotNull(
+				answerResult.Metadata);
 		}
 	}
 }
