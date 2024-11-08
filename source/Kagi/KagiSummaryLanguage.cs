@@ -5,9 +5,6 @@ using System.Text.Json.Serialization;
 using System.Runtime;
 using System.Runtime.Serialization;
 
-using Kagi;
-using Kagi.Internal;
-
 namespace Kagi
 {
 	/// <summary>
