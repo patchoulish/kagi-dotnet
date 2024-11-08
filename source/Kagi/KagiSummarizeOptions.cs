@@ -35,14 +35,14 @@ namespace Kagi
 		/// </summary>
 		[JsonPropertyName(
 			"engine")]
-		public KagiSummaryEngine Engine { get; init; }
+		public KagiSummaryEngine? Engine { get; init; }
 
 		/// <summary>
 		/// The <see cref="KagiSummaryKind"/> to output.
 		/// </summary>
 		[JsonPropertyName(
 			"summary_type")]
-		public KagiSummaryKind Kind { get; init; }
+		public KagiSummaryKind? Kind { get; init; }
 
 		/// <summary>
 		/// The <see cref="KagiSummaryLanguage"/> to output.
@@ -55,13 +55,13 @@ namespace Kagi
 		/// </remarks>
 		[JsonPropertyName(
 			"target_language")]
-		public KagiSummaryLanguage OutputLanguage { get; init; }
+		public KagiSummaryLanguage? OutputLanguage { get; init; }
 
 		/// <summary>
 		/// Whether to allow cached requests and responses.
 		/// </summary>
 		[JsonPropertyName(
 			"cache")]
-		public bool AllowCaching { get; init; }
+		public bool? AllowCaching { get; init; }
 	}
 }

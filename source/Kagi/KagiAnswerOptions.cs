@@ -22,7 +22,6 @@ namespace Kagi
 		/// </summary>
 		[JsonPropertyName(
 			"cache")]
-		public bool AllowCaching { get; init; } =
-			true;
+		public bool? AllowCaching { get; init; }
 	}
 }
