@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
 		<RootNamespace>Kagi</RootNamespace>
+		<LangVersion>latest</LangVersion>
 
 		<IsPackable>true</IsPackable>
 		<AssemblyName>kagi-dotnet-dependencyinjection</AssemblyName>
