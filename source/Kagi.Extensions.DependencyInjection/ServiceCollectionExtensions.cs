@@ -16,7 +16,7 @@ namespace Kagi
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		/// The name to use when configuring the named client for .
+		/// The name to use for the named client.
 		/// </summary>
 		private const string KagiHttpClientName =
 			"kagi";
