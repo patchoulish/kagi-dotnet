@@ -1,6 +1,14 @@
 # Release History
 
 
+## 0.1.3 (2024-11-07)
+Target .NET 6 and .NET Standard 2.1.
+
+### Features Added
+- Added .NET 6 project target.
+- Added .NET Standard 2.1 project target.
+
+
 ## 0.1.2 (2024-11-06)
 Minor refactor with added features.
 
