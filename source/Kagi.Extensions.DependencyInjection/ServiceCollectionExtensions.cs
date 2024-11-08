@@ -37,6 +37,10 @@ namespace Kagi
 			var options =
 				new KagiServiceOptions();
 
+			optionsCallback?
+				.Invoke(
+					options);
+
 			return services
 				.AddHttpClient<IKagiService, KagiService>(
 					KagiHttpClientName,
