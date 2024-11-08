@@ -20,6 +20,7 @@
 	
 	<!-- Project reference(s) -->
 	<ItemGroup>
+		<ProjectReference Include="..\Kagi.Extensions.DependencyInjection\Kagi.Extensions.DependencyInjection.csproj" />
 		<ProjectReference Include="..\Kagi\Kagi.csproj" />
 	</ItemGroup>
 </Project>
