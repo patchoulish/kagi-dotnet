@@ -1,6 +1,16 @@
 # Release History
 
 
+## 0.1.4 (2024-11-08)
+Refactored and fixed bugs.
+
+### Features Added
+- Made some non-required properties optional.
+
+### Bugs Fixed
+-  Fixed a bug where `optionsCallback` was being ignored in `AddKagiHttpClient`.
+
+
 ## 0.1.3 (2024-11-07)
 Target .NET 6 and .NET Standard 2.1.
 
