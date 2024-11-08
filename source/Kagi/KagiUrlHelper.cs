@@ -39,10 +39,9 @@ namespace Kagi
 		public static bool IsImageProxyPathFragment(
 			string value)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					value,
-					nameof(value));
+			Guard.NotNull(
+				value,
+				nameof(value));
 
 			return value
 				.StartsWith(
@@ -64,10 +63,9 @@ namespace Kagi
 		public static Uri ToImageProxyUrl(
 			string value)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					value,
-					nameof(value));
+			Guard.NotNull(
+				value,
+				nameof(value));
 
 			if (Uri.TryCreate(
 					ImageProxyBaseUrl,

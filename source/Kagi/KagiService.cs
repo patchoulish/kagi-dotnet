@@ -50,15 +50,13 @@ namespace Kagi
 			Uri baseUrl,
 			string apiKey)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					baseUrl,
-					nameof(baseUrl));
+			Guard.NotNull(
+				baseUrl,
+				nameof(baseUrl));
 
-			ArgumentException
-				.ThrowIfNullOrEmpty(
-					apiKey,
-					nameof(apiKey));
+			Guard.NotNullOrEmpty(
+				apiKey,
+				nameof(apiKey));
 
 			var client = new HttpClient();
 
@@ -168,10 +166,9 @@ namespace Kagi
 		public KagiService(
 			HttpClient client)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					client,
-					nameof(client));
+			Guard.NotNull(
+				client,
+				nameof(client));
 
 			this.client = client;
 		}
@@ -187,10 +184,9 @@ namespace Kagi
 			KagiSummarizeOptions options,
 			CancellationToken cancellationToken = default)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					options,
-					nameof(options));
+			Guard.NotNull(
+				options,
+				nameof(options));
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSummarizeRequestUri(
@@ -226,10 +222,9 @@ namespace Kagi
 			KagiAnswerOptions options,
 			CancellationToken cancellationToken = default)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					options,
-					nameof(options));
+			Guard.NotNull(
+				options,
+				nameof(options));
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateAnswerRequestUri(
@@ -267,15 +262,13 @@ namespace Kagi
 			int limit,
 			CancellationToken cancellationToken = default)
 		{
-			ArgumentException
-				.ThrowIfNullOrWhiteSpace(
-					query,
-					nameof(query));
+			Guard.NotNullOrWhiteSpace(
+				query,
+				nameof(query));
 
-			ArgumentOutOfRangeException
-				.ThrowIfNegativeOrZero(
-					limit,
-					nameof(limit));
+			Guard.NotNegativeOrZero(
+				limit,
+				nameof(limit));
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSearchRequestUri(
@@ -311,10 +304,9 @@ namespace Kagi
 			string query,
 			CancellationToken cancellationToken = default)
 		{
-			ArgumentException
-				.ThrowIfNullOrWhiteSpace(
-					query,
-					nameof(query));
+			Guard.NotNullOrWhiteSpace(
+				query,
+				nameof(query));
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSearchWebEnrichmentsRequestUri(
@@ -349,10 +341,9 @@ namespace Kagi
 			string query,
 			CancellationToken cancellationToken = default)
 		{
-			ArgumentException
-				.ThrowIfNullOrWhiteSpace(
-					query,
-					nameof(query));
+			Guard.NotNullOrWhiteSpace(
+				query,
+				nameof(query));
 
 			// Attempt to create a valid endpoint URL for the request.
 			if (!TryCreateSearchNewsEnrichmentsRequestUri(

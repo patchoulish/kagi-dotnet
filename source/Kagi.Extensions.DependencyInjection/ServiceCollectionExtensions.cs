@@ -30,10 +30,9 @@ namespace Kagi
 			this IServiceCollection services,
 			Action<KagiServiceOptions> optionsCallback = default)
 		{
-			ArgumentNullException
-				.ThrowIfNull(
-					services,
-					nameof(services));
+			Guard.NotNull(
+				services,
+				nameof(services));
 
 			var options =
 				new KagiServiceOptions();
