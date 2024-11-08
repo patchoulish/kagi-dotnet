@@ -21,11 +21,10 @@ namespace Kagi
 		[TestInitialize]
 		public void Initialize()
 		{
-			var clientApiKey = "AgCA7gnvCwc.-SVgHlK0ITk8-2vJRtkNyT-NMm5REOSPpIAskwoE7Gc";
-
 			this.kagi =
 				new KagiService(
-					clientApiKey);
+					Environment.GetEnvironmentVariable(
+						"KAGI_API_KEY"));
 		}
 	}
 }
