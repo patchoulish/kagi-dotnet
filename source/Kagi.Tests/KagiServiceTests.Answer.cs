@@ -85,7 +85,7 @@ namespace Kagi
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task AnswerThrowOnArgumentNullAsync()
+		public async Task AnswerThrowOnArgumentNullTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
 				() => this.kagi.AnswerAsync(
@@ -102,8 +102,9 @@ namespace Kagi
 		[TestCategory(
 			"BadRequest")]
 		[DataTestMethod]
-		[DynamicData(nameof(AnswerThrowOnBadRequestTestData))]
-		public async Task AnswerThrowOnBadRequestAsync(
+		[DynamicData(
+			nameof(AnswerThrowOnBadRequestTestData))]
+		public async Task AnswerThrowOnBadRequestTestAsync(
 			KagiAnswerOptions options)
 		{
 			await Assert.ThrowsExceptionAsync<KagiException>(
@@ -121,8 +122,9 @@ namespace Kagi
 		[TestCategory(
 			"Result")]
 		[DataTestMethod]
-		[DynamicData(nameof(AnswerTestData))]
-		public async Task AnswerAsync(
+		[DynamicData(
+			nameof(AnswerTestData))]
+		public async Task AnswerTestAsync(
 			KagiAnswerOptions options)
 		{
 			// Sleep for a bit to not stress Kagi out.

@@ -13,22 +13,17 @@ using System.Globalization;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Represents a service client for the Kagi API.
 	/// </summary>
 	public sealed class KagiService :
 		IKagiService
 	{
 		/// <summary>
-		/// The base URL for the Kagi API.
-		/// </summary>
-		private const string DefaultBaseUrlValue =
-			"https://kagi.com/api/v0/";
-
-		/// <summary>
-		/// Gets the default base URL for a <see cref="KagiService"/>.
+		/// Gets the default base URL for the Kagi API.
 		/// </summary>
 		public static Uri DefaultBaseUrl { get; } =
-			new Uri(DefaultBaseUrlValue);
+			new Uri(
+				"https://kagi.com/api/v0/");
 
 		/// <summary>
 		/// The JSON serializer options for serializing and deserializing JSON data.
@@ -41,12 +36,13 @@ namespace Kagi
 			};
 
 		/// <summary>
-		/// Creates an instance of HttpClient with the specified base URL and API key.
+		/// Creates and returns a new instance of the <see cref="HttpClient"/> class
+		/// configured to use the specified base URL and API key.
 		/// </summary>
 		/// <param name="baseUrl">The base URL for the API.</param>
-		/// <param name="apiKey">The API key used for authorization.</param>
-		/// <returns>A configured HttpClient instance.</returns>
-		private static HttpClient CreateClient(
+		/// <param name="apiKey">The API key to use for authentication.</param>
+		/// <returns>The <see cref="HttpClient"/> instance.</returns>
+		private static HttpClient CreateHttpClient(
 			Uri baseUrl,
 			string apiKey)
 		{
@@ -58,19 +54,20 @@ namespace Kagi
 				apiKey,
 				nameof(apiKey));
 
-			var client = new HttpClient();
+			var httpClient =
+				new HttpClient();
 
 			// Set the base URL for the client to use.
-			client.BaseAddress =
+			httpClient.BaseAddress =
 				baseUrl;
 
 			// Set the 'Authorization' header value.
-			client.DefaultRequestHeaders.Authorization =
+			httpClient.DefaultRequestHeaders.Authorization =
 				new AuthenticationHeaderValue(
 					"Bot",
 					apiKey);
 
-			return client;
+			return httpClient;
 		}
 
 		/// <summary>
@@ -114,20 +111,20 @@ namespace Kagi
 			}
 		}
 
-		private readonly HttpClient client;
+		private readonly HttpClient httpClient;
 
 		/// <summary>
 		/// Gets the base URL used by the client.
 		/// </summary>
 		public Uri BaseUrl =>
-			this.client
+			this.httpClient
 				.BaseAddress;
 
 		/// <summary>
 		/// Gets the authorization header value set on the client.
 		/// </summary>
 		public AuthenticationHeaderValue AuthorizationHeaderValue =>
-			this.client
+			this.httpClient
 				.DefaultRequestHeaders
 				.Authorization;
 
@@ -135,7 +132,7 @@ namespace Kagi
 		/// Initializes a new instance of the <see cref="KagiService"/>
 		/// class with the specified API key.
 		/// </summary>
-		/// <param name="apiKey">The API key for authorizing requests.</param>
+		/// <param name="apiKey">The API key to use for authentication.</param>
 		public KagiService(
 			string apiKey) :
 				this(
@@ -148,38 +145,32 @@ namespace Kagi
 		/// class with the specified base URL and API key.
 		/// </summary>
 		/// <param name="baseUrl">The base URL for the API.</param>
-		/// <param name="apiKey">The API key for authorizing requests.</param>
+		/// <param name="apiKey">The API key to use for authentication.</param>
 		public KagiService(
 			Uri baseUrl,
 			string apiKey) :
 				this(
-					CreateClient(
+					CreateHttpClient(
 						baseUrl,
 						apiKey))
 		{ }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="KagiService"/>
-		/// class with a specified <see cref="HttpClient"/>.
+		/// class with the specified <see cref="HttpClient"/> instance.
 		/// </summary>
-		/// <param name="client">The <see cref="HttpClient"/> instance to use.</param>
+		/// <param name="httpClient">The <see cref="HttpClient"/> instance to use.</param>
 		public KagiService(
-			HttpClient client)
+			HttpClient httpClient)
 		{
 			Guard.NotNull(
-				client,
-				nameof(client));
+				httpClient,
+				nameof(httpClient));
 
-			this.client = client;
+			this.httpClient = httpClient;
 		}
 
-		/// <summary>
-		/// Sends a summarization request to Kagi.
-		/// </summary>
-		/// <param name="options">The options for summarization.</param>
-		/// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
-		/// <returns>A task that represents the asynchronous operation, containing the summarization result.</returns>
-		/// <exception cref="KagiException">Thrown if the request fails.</exception>
+		/// <inheritdoc />
 		public async Task<KagiSummarizeResult> SummarizeAsync(
 			KagiSummarizeOptions options,
 			CancellationToken cancellationToken = default)
@@ -189,7 +180,7 @@ namespace Kagi
 				nameof(options));
 
 			// Attempt to create a valid endpoint URL for the request.
-			if (!TryCreateSummarizeRequestUri(
+			if (!TryCreateSummarizeUrl(
 				out var requestUri))
 			{
 				throw new InvalidOperationException(
@@ -198,7 +189,7 @@ namespace Kagi
 
 			// Serialize the provided options and POST the request...
 			var response =
-				await this.client
+				await this.httpClient
 					.PostAsJsonAsync(
 						requestUri,
 						options,
@@ -211,13 +202,7 @@ namespace Kagi
 				cancellationToken);
 		}
 
-		/// <summary>
-		/// Sends an answer generation request to Kagi.
-		/// </summary>
-		/// <param name="options">The options for generating the answer.</param>
-		/// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
-		/// <returns>A task that represents the asynchronous operation, containing the answer result.</returns>
-		/// <exception cref="KagiException">Thrown if the request fails.</exception>
+		/// <inheritdoc />
 		public async Task<KagiAnswerResult> AnswerAsync(
 			KagiAnswerOptions options,
 			CancellationToken cancellationToken = default)
@@ -227,7 +212,7 @@ namespace Kagi
 				nameof(options));
 
 			// Attempt to create a valid endpoint URL for the request.
-			if (!TryCreateAnswerRequestUri(
+			if (!TryCreateAnswerUrl(
 				out var requestUri))
 			{
 				throw new InvalidOperationException(
@@ -236,7 +221,7 @@ namespace Kagi
 
 			// Serialize the provided options and POST the request...
 			var response =
-				await this.client
+				await this.httpClient
 					.PostAsJsonAsync(
 						requestUri,
 						options,
@@ -249,14 +234,7 @@ namespace Kagi
 				cancellationToken);
 		}
 
-		/// <summary>
-		/// Sends a search request to Kagi.
-		/// </summary>
-		/// <param name="query">The search query.</param>
-		/// <param name="limit">Limit for the number of results returned.</param>
-		/// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
-		/// <returns>A task that represents the asynchronous operation, containing the search result.</returns>
-		/// <exception cref="KagiException">Thrown if the request fails.</exception>
+		/// <inheritdoc />
 		public async Task<KagiSearchResult> SearchAsync(
 			string query,
 			int limit,
@@ -271,7 +249,7 @@ namespace Kagi
 				nameof(limit));
 
 			// Attempt to create a valid endpoint URL for the request.
-			if (!TryCreateSearchRequestUri(
+			if (!TryCreateSearchUrl(
 				query,
 				limit,
 				out var requestUri))
@@ -282,7 +260,7 @@ namespace Kagi
 
 			// GET the request...
 			var response =
-				await this.client
+				await this.httpClient
 					.GetAsync(
 						requestUri,
 						cancellationToken);
@@ -293,14 +271,8 @@ namespace Kagi
 				cancellationToken);
 		}
 
-		/// <summary>
-		/// Sends a web enrichment search request to Kagi.
-		/// </summary>
-		/// <param name="query">The search query.</param>
-		/// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
-		/// <returns>A task that represents the asynchronous operation, containing the search result.</returns>
-		/// <exception cref="KagiException">Thrown if the request fails.</exception>
-		public async Task<KagiSearchResult> SearchWebEnrichmentsAsync(
+		/// <inheritdoc />
+		public async Task<KagiSearchResult> GetWebEnrichmentsAsync(
 			string query,
 			CancellationToken cancellationToken = default)
 		{
@@ -309,7 +281,7 @@ namespace Kagi
 				nameof(query));
 
 			// Attempt to create a valid endpoint URL for the request.
-			if (!TryCreateSearchWebEnrichmentsRequestUri(
+			if (!TryCreateGetWebEnrichmentsUrl(
 				query,
 				out var requestUri))
 			{
@@ -319,7 +291,7 @@ namespace Kagi
 
 			// GET the request...
 			var response =
-				await this.client
+				await this.httpClient
 					.GetAsync(
 						requestUri,
 						cancellationToken);
@@ -330,14 +302,8 @@ namespace Kagi
 				cancellationToken);
 		}
 
-		/// <summary>
-		/// Sends a news enrichment search request to Kagi.
-		/// </summary>
-		/// <param name="query">The search query.</param>
-		/// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
-		/// <returns>A task that represents the asynchronous operation, containing the search result.</returns>
-		/// <exception cref="KagiException">Thrown if the request fails.</exception>
-		public async Task<KagiSearchResult> SearchNewsEnrichmentsAsync(
+		/// <inheritdoc />
+		public async Task<KagiSearchResult> GetNewsEnrichmentsAsync(
 			string query,
 			CancellationToken cancellationToken = default)
 		{
@@ -346,7 +312,7 @@ namespace Kagi
 				nameof(query));
 
 			// Attempt to create a valid endpoint URL for the request.
-			if (!TryCreateSearchNewsEnrichmentsRequestUri(
+			if (!TryCreateGetNewsEnrichmentsUrl(
 				query,
 				out var requestUri))
 			{
@@ -356,7 +322,7 @@ namespace Kagi
 
 			// GET the request...
 			var response =
-				await this.client
+				await this.httpClient
 					.GetAsync(
 						requestUri,
 						cancellationToken);
@@ -368,11 +334,11 @@ namespace Kagi
 		}
 
 		/// <summary>
-		/// Tries to create a URI for the summarize request.
+		/// Tries to create a URL for the summarize endpoint.
 		/// </summary>
-		/// <param name="result">The resulting URI, if successful.</param>
-		/// <returns>True if the URI was created successfully; otherwise, false.</returns>
-		private bool TryCreateSummarizeRequestUri(
+		/// <param name="result">The resulting URL, if successful.</param>
+		/// <returns>True if the URL was created successfully; otherwise, false.</returns>
+		private bool TryCreateSummarizeUrl(
 			out Uri result) =>
 				Uri.TryCreate(
 					BaseUrl,
@@ -380,11 +346,11 @@ namespace Kagi
 					out result);
 
 		/// <summary>
-		/// Tries to create a URI for the answer request.
+		/// Tries to create a URL for the answer endpoint.
 		/// </summary>
-		/// <param name="result">The resulting URI, if successful.</param>
-		/// <returns>True if the URI was created successfully; otherwise, false.</returns>
-		private bool TryCreateAnswerRequestUri(
+		/// <param name="result">The resulting URL, if successful.</param>
+		/// <returns>True if the URL was created successfully; otherwise, false.</returns>
+		private bool TryCreateAnswerUrl(
 			out Uri result) =>
 				Uri.TryCreate(
 					BaseUrl,
@@ -392,13 +358,13 @@ namespace Kagi
 					out result);
 
 		/// <summary>
-		/// Tries to create a URI for the search request.
+		/// Tries to create a URL for the search endpoint.
 		/// </summary>
-		/// <param name="query">The search query.</param>
-		/// <param name="limit">Limit for the number of results.</param>
-		/// <param name="result">The resulting URI, if successful.</param>
-		/// <returns>True if the URI was created successfully; otherwise, false.</returns>
-		private bool TryCreateSearchRequestUri(
+		/// <param name="query">The query to search for.</param>
+		/// <param name="limit">The maximum number of results to return.</param>
+		/// <param name="result">The resulting URL, if successful.</param>
+		/// <returns>True if the URL was created successfully; otherwise, false.</returns>
+		private bool TryCreateSearchUrl(
 			string query,
 			int limit,
 			out Uri result) =>
@@ -413,12 +379,12 @@ namespace Kagi
 					out result);
 
 		/// <summary>
-		/// Tries to create a URI for the web enrichment search request.
+		/// Tries to create a URL for the web enrichments endpoint.
 		/// </summary>
-		/// <param name="query">The search query.</param>
-		/// <param name="result">The resulting URI, if successful.</param>
-		/// <returns>True if the URI was created successfully; otherwise, false.</returns>
-		private bool TryCreateSearchWebEnrichmentsRequestUri(
+		/// <param name="query">The query to fetch enrichment results for.</param>
+		/// <param name="result">The resulting URL, if successful.</param>
+		/// <returns>True if the URL was created successfully; otherwise, false.</returns>
+		private bool TryCreateGetWebEnrichmentsUrl(
 			string query,
 			out Uri result) =>
 				Uri.TryCreate(
@@ -431,12 +397,12 @@ namespace Kagi
 					out result);
 
 		/// <summary>
-		/// Tries to create a URI for the news enrichment search request.
+		/// Tries to create a URL for the news enrichments endpoint.
 		/// </summary>
-		/// <param name="query">The search query.</param>
-		/// <param name="result">The resulting URI, if successful.</param>
-		/// <returns>True if the URI was created successfully; otherwise, false.</returns>
-		private bool TryCreateSearchNewsEnrichmentsRequestUri(
+		/// <param name="query">The query to fetch enrichment results for.</param>
+		/// <param name="result">The resulting URL, if successful.</param>
+		/// <returns>True if the URL was created successfully; otherwise, false.</returns>
+		private bool TryCreateGetNewsEnrichmentsUrl(
 			string query,
 			out Uri result) =>
 				Uri.TryCreate(

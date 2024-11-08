@@ -11,7 +11,7 @@ namespace Kagi
 	public class KagiRecordSearchDataThumbnail
 	{
 		/// <summary>
-		/// 
+		/// The underlying image URL or proxy URL path fragment.
 		/// </summary>
 		[JsonInclude]
 		[JsonPropertyName(

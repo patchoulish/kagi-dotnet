@@ -26,7 +26,7 @@ namespace Kagi.Extensions.DependencyInjection
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public void AddKagiHttpClientThrowOnArgumentNull()
+		public void AddKagiHttpClientThrowOnArgumentNullTest()
 		{
 			Assert.ThrowsException<ArgumentNullException>(
 				() => ServiceCollectionExtensions
@@ -45,7 +45,7 @@ namespace Kagi.Extensions.DependencyInjection
 		[TestCategory(
 			"Result")]
 		[TestMethod]
-		public void AddKagiHttpClient()
+		public void AddKagiHttpClientTest()
 		{
 			var services =
 				new ServiceCollection();

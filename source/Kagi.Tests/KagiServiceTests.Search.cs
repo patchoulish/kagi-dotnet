@@ -49,7 +49,7 @@ namespace Kagi
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchThrowOnArgumentNullAsync()
+		public async Task SearchThrowOnArgumentNullTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
 				() => this.kagi.SearchAsync(
@@ -66,7 +66,7 @@ namespace Kagi
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchThrowOnArgumentEmptyAsync()
+		public async Task SearchThrowOnArgumentEmptyTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentException>(
 				() => this.kagi.SearchAsync(
@@ -83,7 +83,7 @@ namespace Kagi
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchThrowOnArgumentOutOfRangeAsync()
+		public async Task SearchThrowOnArgumentOutOfRangeTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(
 				() => this.kagi.SearchAsync(
@@ -109,7 +109,7 @@ namespace Kagi
 		[DataTestMethod]
 		[DynamicData(
 			nameof(SearchTestData))]
-		public async Task SearchAsync(
+		public async Task SearchTestAsync(
 			string query,
 			int limit)
 		{

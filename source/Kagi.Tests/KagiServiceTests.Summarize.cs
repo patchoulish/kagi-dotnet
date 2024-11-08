@@ -96,7 +96,7 @@ namespace Kagi
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SummarizeThrowOnArgumentNullAsync()
+		public async Task SummarizeThrowOnArgumentNullTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
 				() => this.kagi.SummarizeAsync(
@@ -113,8 +113,9 @@ namespace Kagi
 		[TestCategory(
 			"BadRequest")]
 		[DataTestMethod]
-		[DynamicData(nameof(SummarizeThrowOnBadRequestTestData))]
-		public async Task SummarizeThrowOnBadRequestAsync(
+		[DynamicData(
+			nameof(SummarizeThrowOnBadRequestTestData))]
+		public async Task SummarizeThrowOnBadRequestTestAsync(
 			KagiSummarizeOptions options)
 		{
 			await Assert.ThrowsExceptionAsync<KagiException>(
@@ -132,8 +133,9 @@ namespace Kagi
 		[TestCategory(
 			"Result")]
 		[DataTestMethod]
-		[DynamicData(nameof(SummarizeTestData))]
-		public async Task SummarizeAsync(
+		[DynamicData(
+			nameof(SummarizeTestData))]
+		public async Task SummarizeTestAsync(
 			KagiSummarizeOptions options)
 		{
 			// Sleep for a bit to not stress Kagi out.

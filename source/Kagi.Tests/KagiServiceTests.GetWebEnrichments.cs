@@ -16,7 +16,7 @@ namespace Kagi
 		/// <summary>
 		/// 
 		/// </summary>
-		public static IEnumerable<object[]> SearchWebEnrichmentsTestData =>
+		public static IEnumerable<object[]> GetWebEnrichmentsTestData =>
 			[
 				[
 					"coffee enthusiast blog"
@@ -40,14 +40,14 @@ namespace Kagi
 		/// </summary>
 		/// <returns></returns>
 		[TestCategory(
-			"SearchWebEnrichments")]
+			"GetWebEnrichments")]
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchWebEnrichmentsThrowOnArgumentNullAsync()
+		public async Task GetWebEnrichmentsThrowOnArgumentNullTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
-				() => this.kagi.SearchWebEnrichmentsAsync(
+				() => this.kagi.GetWebEnrichmentsAsync(
 					default));
 		}
 
@@ -56,14 +56,14 @@ namespace Kagi
 		/// </summary>
 		/// <returns></returns>
 		[TestCategory(
-			"SearchWebEnrichments")]
+			"GetWebEnrichments")]
 		[TestCategory(
 			"Argument")]
 		[TestMethod]
-		public async Task SearchWebEnrichmentsThrowOnArgumentEmptyAsync()
+		public async Task GetWebEnrichmentsThrowOnArgumentEmptyTestAsync()
 		{
 			await Assert.ThrowsExceptionAsync<ArgumentException>(
-				() => this.kagi.SearchWebEnrichmentsAsync(
+				() => this.kagi.GetWebEnrichmentsAsync(
 					String.Empty));
 		}
 
@@ -73,13 +73,13 @@ namespace Kagi
 		/// <param name="query"></param>
 		/// <returns></returns>
 		[TestCategory(
-			"SearchWebEnrichments")]
+			"GetWebEnrichments")]
 		[TestCategory(
 			"Result")]
 		[DataTestMethod]
 		[DynamicData(
-			nameof(SearchWebEnrichmentsTestData))]
-		public async Task SearchWebEnrichmentsAsync(
+			nameof(GetWebEnrichmentsTestData))]
+		public async Task GetWebEnrichmentsTestAsync(
 			string query)
 		{
 			// Sleep for a bit to not stress Kagi out.
@@ -88,7 +88,7 @@ namespace Kagi
 
 			var searchResult =
 				await this.kagi
-					.SearchWebEnrichmentsAsync(
+					.GetWebEnrichmentsAsync(
 						query);
 
 			Assert.IsNotNull(
