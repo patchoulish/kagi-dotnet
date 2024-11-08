@@ -10,22 +10,25 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Kagi
 {
 	/// <summary>
-	/// 
+	/// Contains extension methods for
+	/// <see cref="IServiceCollection"/>.
 	/// </summary>
 	public static class ServiceCollectionExtensions
 	{
 		/// <summary>
-		/// 
+		/// The name to use when configuring the named client for .
 		/// </summary>
 		private const string KagiHttpClientName =
 			"kagi";
 
 		/// <summary>
-		/// 
+		/// Registers an instance of the <see cref="KagiService"/>
+		/// class with an <see cref="IServiceCollection"/>
+		/// using a named <see cref="HttpClient"/>.
 		/// </summary>
-		/// <param name="services"></param>
-		/// <param name="optionsCallback"></param>
-		/// <returns></returns>
+		/// <param name="services">The service collection to register with.</param>
+		/// <param name="optionsCallback">The callback to configure the options for the instance with.</param>
+		/// <returns>An <see cref="IHttpClientBuilder"/> that can be used to configure the named client.</returns>
 		public static IHttpClientBuilder AddKagiHttpClient(
 			this IServiceCollection services,
 			Action<KagiServiceOptions> optionsCallback = default)
