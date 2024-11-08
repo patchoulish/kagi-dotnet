@@ -129,7 +129,7 @@ The **Enrichment API** allows you to access unique web content from Kagi’s spe
 #### Web Enrichment
 Retrieve supplemental results focused on high-quality "small web" content.
 ```csharp
-var webEnrichmentResults = await kagi.SearchWebEnrichmentsAsync("coffee blog");
+var webEnrichmentResults = await kagi.GetWebEnrichmentsAsync("coffee blog");
 
 foreach (var item in webEnrichmentResults.Data)
 {
@@ -140,7 +140,7 @@ foreach (var item in webEnrichmentResults.Data)
 #### News Enrichment
 Retrieve non-mainstream, high-quality news content relevant to your query.
 ```csharp
-var newsEnrichmentResults = await kagi.SearchNewsEnrichmentsAsync("local news");
+var newsEnrichmentResults = await kagi.GetNewsEnrichmentsAsync("local news");
 
 foreach (var item in newsEnrichmentResults.Data)
 {
