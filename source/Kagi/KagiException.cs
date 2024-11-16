@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Collections;
 using System.Collections.Immutable;
 
@@ -9,12 +11,21 @@ namespace Kagi
 	/// <see cref="KagiError"/> for a given operation.
 	/// </summary>
 	public class KagiException :
-		Exception
+		HttpRequestException
 	{
+#if NETSTANDARD
+
 		/// <summary>
-		/// The collection of <see cref="KagiError"/> for the exception.
+		/// Gets the <see cref="HttpStatusCode"/> for this exception, if any.
 		/// </summary>
-		public ImmutableArray<KagiError> Errors { get; init; }
+		public HttpStatusCode? StatusCode { get; private init; }
+
+#endif
+
+		/// <summary>
+		/// Gets a read-only collection of <see cref="KagiError"/> for this exception.
+		/// </summary>
+		public ImmutableArray<KagiError> Errors { get; private init; }
 
 		/// <inheritdoc />
 		public KagiException() :
@@ -30,18 +41,35 @@ namespace Kagi
 					default)
 		{ }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiException"/>
-		/// class with a specified error message and collection of <see cref="KagiError"/>.
-		/// </summary>
-		/// <param name="message">The message that describes the error.</param>
-		/// <param name="errors">A collection of <see cref="KagiError"/> for the exception.</param>
+		/// <inheritdoc />
 		public KagiException(
 			string message,
-			ImmutableArray<KagiError> errors) :
+			Exception innerException) :
 				this(
 					message,
-					errors,
+					innerException,
+					default)
+		{ }
+
+#if NETSTANDARD
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KagiException"/>
+		/// class with a specified error message, a reference to the inner
+		/// exception that is the cause of this exception, and the status
+		/// code for this exception, if any.
+		/// </summary>
+		/// <param name="message">The message that describes the error.</param>
+		/// <param name="innerException">The inner exception that is the cause of this exception.</param>
+		/// <param name="statusCode">The HTTP status code for this exception, if any.</param>
+		public KagiException(
+			string message,
+			Exception innerException,
+			HttpStatusCode? statusCode) :
+				this(
+					message,
+					innerException,
+					statusCode,
 					default)
 		{ }
 
@@ -51,17 +79,60 @@ namespace Kagi
 		/// and a reference to the inner exception that is the cause of this exception.
 		/// </summary>
 		/// <param name="message">The message that describes the error.</param>
-		/// <param name="errors">A collection of <see cref="KagiError"/> for the exception.</param>
 		/// <param name="innerException">The inner exception that is the cause of this exception.</param>
+		/// <param name="statusCode">The HTTP status code for this exception, if any.</param>
+		/// <param name="errors">A collection of <see cref="KagiError"/> for the exception.</param>
 		public KagiException(
 			string message,
-			ImmutableArray<KagiError> errors,
-			Exception innerException) :
+			Exception innerException,
+			HttpStatusCode? statusCode,
+			ImmutableArray<KagiError> errors) :
 				base(
 					message,
 					innerException)
 		{
+			StatusCode = statusCode;
 			Errors = errors;
 		}
+
+#endif
+
+#if NET
+
+		/// <inheritdoc />
+		public KagiException(
+			string message,
+			Exception innerException,
+			HttpStatusCode? statusCode) :
+				this(
+					message,
+					innerException,
+					statusCode,
+					default)
+		{ }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KagiException"/>
+		/// class with a specified error message, collection of <see cref="KagiError"/>,
+		/// and a reference to the inner exception that is the cause of this exception.
+		/// </summary>
+		/// <param name="message">The message that describes the error.</param>
+		/// <param name="innerException">The inner exception that is the cause of this exception.</param>
+		/// <param name="statusCode">The HTTP status code for this exception, if any.</param>
+		/// <param name="errors">A collection of <see cref="KagiError"/> for the exception.</param>
+		public KagiException(
+			string message,
+			Exception innerException,
+			HttpStatusCode? statusCode,
+			ImmutableArray<KagiError> errors) :
+				base(
+					message,
+					innerException,
+					statusCode)
+		{
+			Errors = errors;
+		}
+
+#endif
 	}
 }
