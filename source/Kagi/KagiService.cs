@@ -54,7 +54,11 @@ namespace Kagi
 
 			var httpClient =
 				new HttpClient(
-					new KagiDelegatingHandler(),
+					new KagiDelegatingHandler()
+					{
+						InnerHandler =
+							new HttpClientHandler()
+					},
 					disposeHandler: true);
 
 			// Set the base URL for the client to use.
