@@ -2,8 +2,6 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Runtime;
-using System.Runtime.Serialization;
 
 namespace Kagi
 {
@@ -11,28 +9,28 @@ namespace Kagi
 	/// Enumerates the provided summarization engines.
 	/// </summary>
 	[JsonConverter(
-		typeof(JsonEnumMemberEnumConverter<KagiSummaryEngine>))]
+		typeof(JsonStringEnumConverter<KagiSummaryEngine>))]
 	public enum KagiSummaryEngine
 	{
 		/// <summary>
 		/// Provides a friendly, descriptive, fast summary.
 		/// </summary>
-		[EnumMember(
-			Value = "cecil")]
+		[JsonStringEnumMemberName(
+			"cecil")]
 		Cecil,
 
 		/// <summary>
 		/// Provides a formal, technical, analytical summary.
 		/// </summary>
-		[EnumMember(
-			Value = "agnes")]
+		[JsonStringEnumMemberName(
+			"agnes")]
 		Agnes,
 
 		/// <summary>
 		/// Provides a best-in-class summary using Kagi's enterprise-grade model.
 		/// </summary>
-		[EnumMember(
-			Value = "muriel")]
+		[JsonStringEnumMemberName(
+			"muriel")]
 		Muriel,
 	}
 }

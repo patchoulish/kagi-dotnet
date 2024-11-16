@@ -2,8 +2,6 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Runtime;
-using System.Runtime.Serialization;
 
 namespace Kagi
 {
@@ -11,217 +9,217 @@ namespace Kagi
 	/// Enumerates the supported output languages for summarization.
 	/// </summary>
 	[JsonConverter(
-		typeof(JsonEnumMemberEnumConverter<KagiSummaryLanguage>))]
+		typeof(JsonStringEnumConverter<KagiSummaryLanguage>))]
 	public enum KagiSummaryLanguage
 	{
 		/// <summary>
 		/// The Bulgarian language.
 		/// </summary>
-		[EnumMember(
-			Value = "BG")]
+		[JsonStringEnumMemberName(
+			"BG")]
 		Bulgarian,
 
 		/// <summary>
 		/// The Czech language.
 		/// </summary>
-		[EnumMember(
-			Value = "CS")]
+		[JsonStringEnumMemberName(
+			"CS")]
 		Czech,
 
 		/// <summary>
 		/// The Danish language.
 		/// </summary>
-		[EnumMember(
-			Value = "DA")]
+		[JsonStringEnumMemberName(
+			"DA")]
 		Danish,
 
 		/// <summary>
 		/// The German language.
 		/// </summary>
-		[EnumMember(
-			Value = "DE")]
+		[JsonStringEnumMemberName(
+			"DE")]
 		German,
 
 		/// <summary>
 		/// The Greek language.
 		/// </summary>
-		[EnumMember(
-			Value = "EL")]
+		[JsonStringEnumMemberName(
+			"EL")]
 		Greek,
 
 		/// <summary>
 		/// The English language.
 		/// </summary>
-		[EnumMember(
-			Value = "EN")]
+		[JsonStringEnumMemberName(
+			"EN")]
 		English,
 
 		/// <summary>
 		/// The Spanish language.
 		/// </summary>
-		[EnumMember(
-			Value = "ES")]
+		[JsonStringEnumMemberName(
+			"ES")]
 		Spanish,
 
 		/// <summary>
 		/// The Estonian language.
 		/// </summary>
-		[EnumMember(
-			Value = "ET")]
+		[JsonStringEnumMemberName(
+			"ET")]
 		Estonian,
 
 		/// <summary>
 		/// The Finnish language.
 		/// </summary>
-		[EnumMember(
-			Value = "FI")]
+		[JsonStringEnumMemberName(
+			"FI")]
 		Finnish,
 
 		/// <summary>
 		/// The French language.
 		/// </summary>
-		[EnumMember(
-			Value = "FR")]
+		[JsonStringEnumMemberName(
+			"FR")]
 		French,
 
 		/// <summary>
 		/// The Hungarian language.
 		/// </summary>
-		[EnumMember(
-			Value = "HU")]
+		[JsonStringEnumMemberName(
+			"HU")]
 		Hungarian,
 
 		/// <summary>
 		/// The Indonesian language.
 		/// </summary>
-		[EnumMember(
-			Value = "ID")]
+		[JsonStringEnumMemberName(
+			"ID")]
 		Indonesian,
 
 		/// <summary>
 		/// The Italian language.
 		/// </summary>
-		[EnumMember(
-			Value = "IT")]
+		[JsonStringEnumMemberName(
+			"IT")]
 		Italian,
 
 		/// <summary>
 		/// The Japanese language.
 		/// </summary>
-		[EnumMember(
-			Value = "JA")]
+		[JsonStringEnumMemberName(
+			"JA")]
 		Japanese,
 
 		/// <summary>
 		/// The Korean language.
 		/// </summary>
-		[EnumMember(
-			Value = "KO")]
+		[JsonStringEnumMemberName(
+			"KO")]
 		Korean,
 
 		/// <summary>
 		/// The Lithuanian language.
 		/// </summary>
-		[EnumMember(
-			Value = "LT")]
+		[JsonStringEnumMemberName(
+			"LT")]
 		Lithuanian,
 
 		/// <summary>
 		/// The Latvian language.
 		/// </summary>
-		[EnumMember(
-			Value = "LV")]
+		[JsonStringEnumMemberName(
+			"LV")]
 		Latvian,
 
 		/// <summary>
 		/// The Norwegian language.
 		/// </summary>
-		[EnumMember(
-			Value = "NB")]
+		[JsonStringEnumMemberName(
+			"NB")]
 		Norwegian,
 
 		/// <summary>
 		/// The Dutch language.
 		/// </summary>
-		[EnumMember(
-			Value = "NL")]
+		[JsonStringEnumMemberName(
+			"NL")]
 		Dutch,
 
 		/// <summary>
 		/// The Polish language.
 		/// </summary>
-		[EnumMember(
-			Value = "PL")]
+		[JsonStringEnumMemberName(
+			"PL")]
 		Polish,
 
 		/// <summary>
 		/// The Portuguese language.
 		/// </summary>
-		[EnumMember(
-			Value = "PT")]
+		[JsonStringEnumMemberName(
+			"PT")]
 		Portuguese,
 
 		/// <summary>
 		/// The Romanian language.
 		/// </summary>
-		[EnumMember(
-			Value = "RO")]
+		[JsonStringEnumMemberName(
+			"RO")]
 		Romanian,
 
 		/// <summary>
 		/// The Russian language.
 		/// </summary>
-		[EnumMember(
-			Value = "RU")]
+		[JsonStringEnumMemberName(
+			"RU")]
 		Russian,
 
 		/// <summary>
 		/// The Slovak language.
 		/// </summary>
-		[EnumMember(
-			Value = "SK")]
+		[JsonStringEnumMemberName(
+			"SK")]
 		Slovak,
 
 		/// <summary>
 		/// The Slovenian language.
 		/// </summary>
-		[EnumMember(
-			Value = "SL")]
+		[JsonStringEnumMemberName(
+			"SL")]
 		Slovenian,
 
 		/// <summary>
 		/// The Swedish language.
 		/// </summary>
-		[EnumMember(
-			Value = "SV")]
+		[JsonStringEnumMemberName(
+			"SV")]
 		Swedish,
 
 		/// <summary>
 		/// The Turkish language.
 		/// </summary>
-		[EnumMember(
-			Value = "TR")]
+		[JsonStringEnumMemberName(
+			"TR")]
 		Turkish,
 
 		/// <summary>
 		/// The Ukrainian language.
 		/// </summary>
-		[EnumMember(
-			Value = "UK")]
+		[JsonStringEnumMemberName(
+			"UK")]
 		Ukrainian,
 
 		/// <summary>
 		/// The Chinese (simplified) language.
 		/// </summary>
-		[EnumMember(
-			Value = "ZH")]
+		[JsonStringEnumMemberName(
+			"ZH")]
 		ChineseSimplified,
 
 		/// <summary>
 		/// The Chinese (traditional) language.
 		/// </summary>
-		[EnumMember(
-			Value = "ZH-HANT")]
+		[JsonStringEnumMemberName(
+			"ZH-HANT")]
 		ChineseTraditional,
 	}
 }
