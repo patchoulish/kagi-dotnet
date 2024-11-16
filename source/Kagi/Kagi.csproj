@@ -37,12 +37,14 @@
 		<None Include="..\..\readme.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
+			<Visible>False</Visible>
 		</None>
 
 		<!-- Include a copy of the project license in the NuGet package -->
 		<None Include="..\..\license.txt">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
+			<Visible>False</Visible>
 		</None>
 	</ItemGroup>
 
