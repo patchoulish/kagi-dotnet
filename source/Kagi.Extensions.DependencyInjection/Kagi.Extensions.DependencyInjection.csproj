@@ -50,7 +50,7 @@
 
 	<!-- Package reference(s) -->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
 	</ItemGroup>
 
 	<!-- Project reference(s) -->
