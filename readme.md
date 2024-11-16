@@ -37,14 +37,17 @@ var kagi = new KagiService("YOUR_KAGI_API_KEY");
 #### Advanced Initialization
 Use an existing `HttpClient`, ensuring that `BaseAddress` and an `Authorization` header have been set:
 ```csharp
-var httpClient = new HttpClient
+var httpClient = new HttpClient(
+	new KagiDelegatingHandler(),
+	disposeHandler: true)
 {
-    BaseAddress = new Uri("https://kagi.com/api/v0/"),
-    Timeout = TimeSpan.FromSeconds(5)
+	BaseAddress = new Uri("https://kagi.com/api/v0/"),
+	Timeout = TimeSpan.FromSeconds(5)
 };
 
-httpClient.DefaultRequestHeaders.Authorization =
-	new AuthenticationHeaderValue("Bot", "YOUR_KAGI_API_KEY");
+httpClient.DefaultRequestHeaders.Add(
+	$"Authorization",
+	$"Bot YOUR_KAGI_API_KEY");
 
 var kagi = new KagiService(httpClient);
 ```
