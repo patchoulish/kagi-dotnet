@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 using Microsoft;
 using Microsoft.Extensions;
@@ -45,6 +44,7 @@ namespace Kagi
 					options);
 
 			return services
+				.AddTransient<KagiDelegatingHandler>()
 				.AddHttpClient<IKagiService, KagiService>(
 					KagiHttpClientName,
 					(httpClient) =>
@@ -54,11 +54,11 @@ namespace Kagi
 							options.BaseUrl;
 
 						// Configure the default request headers for the client.
-						httpClient.DefaultRequestHeaders.Authorization =
-							new AuthenticationHeaderValue(
-								"Bot",
-								options.ApiKey);
-					});
+						httpClient.DefaultRequestHeaders.Add(
+							$"Authorization",
+							$"Bot {options.ApiKey}");
+					})
+				.AddHttpMessageHandler<KagiDelegatingHandler>();
 		}
 	}
 }

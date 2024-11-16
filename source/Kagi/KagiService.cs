@@ -62,10 +62,9 @@ namespace Kagi
 				baseUrl;
 
 			// Set the 'Authorization' header value.
-			httpClient.DefaultRequestHeaders.Authorization =
-				new AuthenticationHeaderValue(
-					"Bot",
-					apiKey);
+			httpClient.DefaultRequestHeaders.Add(
+				$"Authorization",
+				$"Bot {apiKey}");
 
 			return httpClient;
 		}
