@@ -38,7 +38,10 @@ var kagi = new KagiService("YOUR_KAGI_API_KEY");
 Use an existing `HttpClient`, ensuring that `BaseAddress` and an `Authorization` header have been set:
 ```csharp
 var httpClient = new HttpClient(
-	new KagiDelegatingHandler(),
+	new KagiDelegatingHandler()
+	{
+		InnerHandler = new HttpClientHandler()
+	},
 	disposeHandler: true)
 {
 	BaseAddress = new Uri("https://kagi.com/api/v0/"),
