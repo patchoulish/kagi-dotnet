@@ -7,8 +7,9 @@ using System.Collections.Immutable;
 namespace Kagi
 {
 	/// <summary>
-	/// Represents an exception that wraps zero or more
-	/// <see cref="KagiError"/> for a given operation.
+	/// Represents the exception thrown by instances of the
+	/// <see cref="KagiService"/> and <see cref="KagiDelegatingHandler"/>
+	/// classes.
 	/// </summary>
 	public class KagiException :
 		HttpRequestException
@@ -16,7 +17,7 @@ namespace Kagi
 #if NETSTANDARD
 
 		/// <summary>
-		/// Gets the <see cref="HttpStatusCode"/> for this exception, if any.
+		/// Gets the HTTP status code for this exception, if any.
 		/// </summary>
 		public HttpStatusCode? StatusCode { get; private init; }
 
@@ -27,13 +28,21 @@ namespace Kagi
 		/// </summary>
 		public ImmutableArray<KagiError> Errors { get; private init; }
 
-		/// <inheritdoc />
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KagiException"/> class.
+		/// </summary>
 		public KagiException() :
 			this(
 				default)
 		{ }
 
-		/// <inheritdoc />
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KagiException"/> class
+		/// with a specific message that describes the current exception.
+		/// </summary>
+		/// <param name="message">
+		/// A message that describes the current exception.
+		/// </param>
 		public KagiException(
 			string message) :
 				this(
@@ -41,7 +50,17 @@ namespace Kagi
 					default)
 		{ }
 
-		/// <inheritdoc />
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KagiException"/> class
+		/// with a specific message that describes the current exception and an
+		/// inner exception.
+		/// </summary>
+		/// <param name="message">
+		/// A message that describes the current exception.
+		/// </param>
+		/// <param name="innerException">
+		/// The inner exception.
+		/// </param>
 		public KagiException(
 			string message,
 			Exception innerException) :
@@ -54,14 +73,19 @@ namespace Kagi
 #if NETSTANDARD
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiException"/>
-		/// class with a specified error message, a reference to the inner
-		/// exception that is the cause of this exception, and the status
-		/// code for this exception, if any.
+		/// Initializes a new instance of the <see cref="KagiException"/> class
+		/// with a specific message that describes the current exception, an
+		/// inner exception, and an HTTP status code.
 		/// </summary>
-		/// <param name="message">The message that describes the error.</param>
-		/// <param name="innerException">The inner exception that is the cause of this exception.</param>
-		/// <param name="statusCode">The HTTP status code for this exception, if any.</param>
+		/// <param name="message">
+		/// A message that describes the current exception.
+		/// </param>
+		/// <param name="innerException">
+		/// The inner exception.
+		/// </param>
+		/// <param name="statusCode">
+		/// The HTTP status code.
+		/// </param>
 		public KagiException(
 			string message,
 			Exception innerException,
@@ -74,14 +98,23 @@ namespace Kagi
 		{ }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiException"/>
-		/// class with a specified error message, collection of <see cref="KagiError"/>,
-		/// and a reference to the inner exception that is the cause of this exception.
+		/// Initializes a new instance of the <see cref="KagiException"/> class
+		/// with a specific message that describes the current exception, an
+		/// inner exception, an HTTP status code, and a collection of
+		/// <see cref="KagiError"/>.
 		/// </summary>
-		/// <param name="message">The message that describes the error.</param>
-		/// <param name="innerException">The inner exception that is the cause of this exception.</param>
-		/// <param name="statusCode">The HTTP status code for this exception, if any.</param>
-		/// <param name="errors">A collection of <see cref="KagiError"/> for the exception.</param>
+		/// <param name="message">
+		/// A message that describes the current exception.
+		/// </param>
+		/// <param name="innerException">
+		/// The inner exception.
+		/// </param>
+		/// <param name="statusCode">
+		/// The HTTP status code.
+		/// </param>
+		/// <param name="errors">
+		/// A collection of <see cref="KagiError"/>.
+		/// </param>
 		public KagiException(
 			string message,
 			Exception innerException,
@@ -99,7 +132,20 @@ namespace Kagi
 
 #if NET
 
-		/// <inheritdoc />
+		/// <summary>
+		/// Initializes a new instance of the <see cref="KagiException"/> class
+		/// with a specific message that describes the current exception, an
+		/// inner exception, and an HTTP status code.
+		/// </summary>
+		/// <param name="message">
+		/// A message that describes the current exception.
+		/// </param>
+		/// <param name="innerException">
+		/// The inner exception.
+		/// </param>
+		/// <param name="statusCode">
+		/// The HTTP status code.
+		/// </param>
 		public KagiException(
 			string message,
 			Exception innerException,
@@ -112,14 +158,23 @@ namespace Kagi
 		{ }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="KagiException"/>
-		/// class with a specified error message, collection of <see cref="KagiError"/>,
-		/// and a reference to the inner exception that is the cause of this exception.
+		/// Initializes a new instance of the <see cref="KagiException"/> class
+		/// with a specific message that describes the current exception, an
+		/// inner exception, an HTTP status code, and a collection of
+		/// <see cref="KagiError"/>.
 		/// </summary>
-		/// <param name="message">The message that describes the error.</param>
-		/// <param name="innerException">The inner exception that is the cause of this exception.</param>
-		/// <param name="statusCode">The HTTP status code for this exception, if any.</param>
-		/// <param name="errors">A collection of <see cref="KagiError"/> for the exception.</param>
+		/// <param name="message">
+		/// A message that describes the current exception.
+		/// </param>
+		/// <param name="innerException">
+		/// The inner exception.
+		/// </param>
+		/// <param name="statusCode">
+		/// The HTTP status code.
+		/// </param>
+		/// <param name="errors">
+		/// A collection of <see cref="KagiError"/>.
+		/// </param>
 		public KagiException(
 			string message,
 			Exception innerException,
