@@ -1,6 +1,13 @@
 # Release History
 
 
+## 0.1.5 (2025-12-03)
+Fixed a bug and dropped support for .NET 6.
+
+### Bugs Fixed
+- Fixed a bug where a null api_balance caused the wrong type of exception to be thrown.
+
+
 ## 0.1.4 (2024-11-08)
 Refactored and fixed bugs.
 
