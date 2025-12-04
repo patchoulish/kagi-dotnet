@@ -36,6 +36,6 @@ namespace Kagi
 		/// </summary>
 		[JsonPropertyName(
 			"api_balance")]
-		public decimal RemainingApiBalance { get; init; }
+		public decimal? RemainingApiBalance { get; init; }
 	}
 }
