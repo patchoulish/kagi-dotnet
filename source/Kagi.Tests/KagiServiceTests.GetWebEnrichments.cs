@@ -46,9 +46,10 @@ namespace Kagi
 		[TestMethod]
 		public async Task GetWebEnrichmentsThrowOnArgumentNullTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+			await Assert.ThrowsAsync<ArgumentNullException>(
 				() => this.kagi.GetWebEnrichmentsAsync(
-					default));
+					default,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -62,9 +63,10 @@ namespace Kagi
 		[TestMethod]
 		public async Task GetWebEnrichmentsThrowOnArgumentEmptyTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentException>(
+			await Assert.ThrowsAsync<ArgumentException>(
 				() => this.kagi.GetWebEnrichmentsAsync(
-					String.Empty));
+					String.Empty,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -76,20 +78,25 @@ namespace Kagi
 			"GetWebEnrichments")]
 		[TestCategory(
 			"Result")]
-		[DataTestMethod]
+		[TestMethod]
 		[DynamicData(
 			nameof(GetWebEnrichmentsTestData))]
 		public async Task GetWebEnrichmentsTestAsync(
 			string query)
 		{
 			// Sleep for a bit to not stress Kagi out.
-			Task.Delay(1000)
-				.Wait();
+			Task
+				.Delay(
+					1000,
+					TestContext.CancellationToken)
+				.Wait(
+					TestContext.CancellationToken);
 
 			var searchResult =
 				await this.kagi
 					.GetWebEnrichmentsAsync(
-						query);
+						query,
+						TestContext.CancellationToken);
 
 			Assert.IsNotNull(
 				searchResult);

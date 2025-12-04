@@ -98,9 +98,10 @@ namespace Kagi
 		[TestMethod]
 		public async Task SummarizeThrowOnArgumentNullTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+			await Assert.ThrowsAsync<ArgumentNullException>(
 				() => this.kagi.SummarizeAsync(
-					default));
+					default,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -112,15 +113,16 @@ namespace Kagi
 			"Summarize")]
 		[TestCategory(
 			"BadRequest")]
-		[DataTestMethod]
+		[TestMethod]
 		[DynamicData(
 			nameof(SummarizeThrowOnBadRequestTestData))]
 		public async Task SummarizeThrowOnBadRequestTestAsync(
 			KagiSummarizeOptions options)
 		{
-			await Assert.ThrowsExceptionAsync<KagiException>(
+			await Assert.ThrowsAsync<KagiException>(
 				() => this.kagi.SummarizeAsync(
-					options));
+					options,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -132,20 +134,25 @@ namespace Kagi
 			"Summarize")]
 		[TestCategory(
 			"Result")]
-		[DataTestMethod]
+		[TestMethod]
 		[DynamicData(
 			nameof(SummarizeTestData))]
 		public async Task SummarizeTestAsync(
 			KagiSummarizeOptions options)
 		{
 			// Sleep for a bit to not stress Kagi out.
-			Task.Delay(1000)
-				.Wait();
+			Task
+				.Delay(
+					1000,
+					TestContext.CancellationToken)
+				.Wait(
+					TestContext.CancellationToken);
 
 			var summarizeResult =
 				await this.kagi
 					.SummarizeAsync(
-						options);
+						options,
+						TestContext.CancellationToken);
 
 			Assert.IsNotNull(
 				summarizeResult);

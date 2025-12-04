@@ -18,6 +18,11 @@ namespace Kagi
 		/// <summary>
 		/// 
 		/// </summary>
+		public TestContext TestContext { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		[TestInitialize]
 		public void Initialize()
 		{

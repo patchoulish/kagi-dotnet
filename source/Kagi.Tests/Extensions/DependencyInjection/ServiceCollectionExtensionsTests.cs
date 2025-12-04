@@ -28,7 +28,7 @@ namespace Kagi.Extensions.DependencyInjection
 		[TestMethod]
 		public void AddKagiHttpClientThrowOnArgumentNullTest()
 		{
-			Assert.ThrowsException<ArgumentNullException>(
+			Assert.Throws<ArgumentNullException>(
 				() => ServiceCollectionExtensions
 					.AddKagiHttpClient(
 						default));

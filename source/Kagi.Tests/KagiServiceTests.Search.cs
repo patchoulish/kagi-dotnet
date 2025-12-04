@@ -51,10 +51,11 @@ namespace Kagi
 		[TestMethod]
 		public async Task SearchThrowOnArgumentNullTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+			await Assert.ThrowsAsync<ArgumentNullException>(
 				() => this.kagi.SearchAsync(
 					default,
-					30));
+					30,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -68,10 +69,11 @@ namespace Kagi
 		[TestMethod]
 		public async Task SearchThrowOnArgumentEmptyTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentException>(
+			await Assert.ThrowsAsync<ArgumentException>(
 				() => this.kagi.SearchAsync(
 					String.Empty,
-					30));
+					30,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -85,15 +87,17 @@ namespace Kagi
 		[TestMethod]
 		public async Task SearchThrowOnArgumentOutOfRangeTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
 				() => this.kagi.SearchAsync(
 					"query",
-					0));
+					0,
+					TestContext.CancellationToken));
 
-			await Assert.ThrowsExceptionAsync<ArgumentOutOfRangeException>(
+			await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
 				() => this.kagi.SearchAsync(
 					"query",
-					-1));
+					-1,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -106,7 +110,7 @@ namespace Kagi
 			"Search")]
 		[TestCategory(
 			"Result")]
-		[DataTestMethod]
+		[TestMethod]
 		[DynamicData(
 			nameof(SearchTestData))]
 		public async Task SearchTestAsync(
@@ -114,14 +118,19 @@ namespace Kagi
 			int limit)
 		{
 			// Sleep for a bit to not stress Kagi out.
-			Task.Delay(1000)
-				.Wait();
+			Task
+				.Delay(
+					1000,
+					TestContext.CancellationToken)
+				.Wait(
+					TestContext.CancellationToken);
 
 			var searchResult =
 				await this.kagi
 					.SearchAsync(
 						query,
-						limit);
+						limit,
+						TestContext.CancellationToken);
 
 			Assert.IsNotNull(
 				searchResult);

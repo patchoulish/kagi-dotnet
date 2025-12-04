@@ -87,9 +87,10 @@ namespace Kagi
 		[TestMethod]
 		public async Task AnswerThrowOnArgumentNullTestAsync()
 		{
-			await Assert.ThrowsExceptionAsync<ArgumentNullException>(
+			await Assert.ThrowsAsync<ArgumentNullException>(
 				() => this.kagi.AnswerAsync(
-					default));
+					default,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -101,15 +102,16 @@ namespace Kagi
 			"Answer")]
 		[TestCategory(
 			"BadRequest")]
-		[DataTestMethod]
+		[TestMethod]
 		[DynamicData(
 			nameof(AnswerThrowOnBadRequestTestData))]
 		public async Task AnswerThrowOnBadRequestTestAsync(
 			KagiAnswerOptions options)
 		{
-			await Assert.ThrowsExceptionAsync<KagiException>(
+			await Assert.ThrowsAsync<KagiException>(
 				() => this.kagi.AnswerAsync(
-					options));
+					options,
+					TestContext.CancellationToken));
 		}
 
 		/// <summary>
@@ -121,20 +123,25 @@ namespace Kagi
 			"Answer")]
 		[TestCategory(
 			"Result")]
-		[DataTestMethod]
+		[TestMethod]
 		[DynamicData(
 			nameof(AnswerTestData))]
 		public async Task AnswerTestAsync(
 			KagiAnswerOptions options)
 		{
 			// Sleep for a bit to not stress Kagi out.
-			Task.Delay(1000)
-				.Wait();
+			Task
+				.Delay(
+					1000,
+					TestContext.CancellationToken)
+				.Wait(
+					TestContext.CancellationToken);
 
 			var answerResult =
 				await this.kagi
 					.AnswerAsync(
-						options);
+						options,
+						TestContext.CancellationToken);
 
 			Assert.IsNotNull(
 				answerResult);
