@@ -110,6 +110,8 @@ namespace Kagi
 			"Search")]
 		[TestCategory(
 			"Result")]
+		[TestCategory(
+			"Manual")]
 		[TestMethod]
 		[DynamicData(
 			nameof(SearchTestData))]

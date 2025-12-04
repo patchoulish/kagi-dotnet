@@ -123,6 +123,8 @@ namespace Kagi
 			"Answer")]
 		[TestCategory(
 			"Result")]
+		[TestCategory(
+			"Manual")]
 		[TestMethod]
 		[DynamicData(
 			nameof(AnswerTestData))]

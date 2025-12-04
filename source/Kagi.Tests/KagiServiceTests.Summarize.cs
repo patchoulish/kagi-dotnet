@@ -113,6 +113,8 @@ namespace Kagi
 			"Summarize")]
 		[TestCategory(
 			"BadRequest")]
+		[TestCategory(
+			"Manual")]
 		[TestMethod]
 		[DynamicData(
 			nameof(SummarizeThrowOnBadRequestTestData))]
@@ -134,6 +136,8 @@ namespace Kagi
 			"Summarize")]
 		[TestCategory(
 			"Result")]
+		[TestCategory(
+			"Manual")]
 		[TestMethod]
 		[DynamicData(
 			nameof(SummarizeTestData))]

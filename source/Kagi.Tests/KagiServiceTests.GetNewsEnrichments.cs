@@ -78,6 +78,8 @@ namespace Kagi
 			"GetNewsEnrichments")]
 		[TestCategory(
 			"Result")]
+		[TestCategory(
+			"Manual")]
 		[TestMethod]
 		[DynamicData(
 			nameof(GetNewsEnrichmentsTestData))]
