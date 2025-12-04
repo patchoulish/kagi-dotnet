@@ -50,8 +50,8 @@
 
 	<!-- Conditional compilation when targeting .NET Standard -->
 	<ItemGroup Condition="$(TargetFramework) == 'netstandard2.1'">
-		<PackageReference Include="System.Net.Http.Json" Version="9.0.0" />
-		<PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
+		<PackageReference Include="System.Net.Http.Json" Version="10.0.0" />
+		<PackageReference Include="System.Collections.Immutable" Version="10.0.0" />
 	</ItemGroup>
 
 	<!-- Init keyword support for older compiler versions -->
@@ -64,6 +64,6 @@
 
 	<!-- Package reference(s) -->
 	<ItemGroup>
-		<PackageReference Include="System.Text.Json" Version="9.0.0" />
+		<PackageReference Include="System.Text.Json" Version="10.0.0" />
 	</ItemGroup>
 </Project>
